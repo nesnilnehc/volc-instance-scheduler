@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  scheduler:
+    # Use the image built from GitHub Actions
+    image: ghcr.io/nesnilnehc/volc-instance-scheduler:latest
+    container_name: volc-instance-scheduler
+    restart: always
+    
+    # Load environment variables from .env file
+    env_file:
+      - .env
+      
+    # Default environment variables (can be overridden by .env)
+    environment:
+      - VOLCENGINE_REGION=cn-beijing
+      - STOP_SCHEDULE=0 22 * * *
+      - TZ=Asia/Shanghai
+      
+    # Production logging configuration to prevent disk fill-up
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        
+    # Resource limits for production stability
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 128M
+        reservations:
+          cpus: '0.05'
+          memory: 64M
