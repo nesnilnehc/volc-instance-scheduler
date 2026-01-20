@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  scheduler:
+    build: .
+    container_name: volc-instance-scheduler
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      # Defaults if not in .env
+      - VOLCENGINE_REGION=cn-beijing
+      - STOP_SCHEDULE=0 22 * * *
+      - TZ=Asia/Shanghai
