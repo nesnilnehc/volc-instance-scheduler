@@ -5,10 +5,17 @@ services:
     container_name: volc-instance-scheduler
     restart: always
     
-    # Load environment variables from .env file
-    env_file:
-      - .env
-
+    # Configuration: Edit these values directly
+    environment:
+      # [REQUIRED] Volcengine Credentials & Instance
+      - VOLCENGINE_ACCESS_KEY=your_access_key_here
+      - VOLCENGINE_SECRET_KEY=your_secret_key_here
+      - INSTANCE_ID=i-your_instance_id
+      
+      # [OPTIONAL] Settings (Defaults shown)
+      - VOLCENGINE_REGION=cn-beijing
+      - STOP_SCHEDULE=0 22 * * *
+      - TZ=Asia/Shanghai
       
     # Production logging configuration to prevent disk fill-up
     logging:
